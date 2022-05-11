@@ -1,0 +1,90 @@
+@startuml Bossa Hores
+
+CompanyGroup o-- "0..*" Company
+Company o-- "0..*" Project
+
+Company o-- "0..*" Hosting
+Hosting o-- "0..*" Invoice
+Project o-- "0..*" Invoice
+
+Invoice o-- "0..*" Entry
+Invoice o-- "0..*" Task
+Invoice -- Invoice
+
+Entry o-- "0..*" Task
+Entry *-- "1..*" User
+
+User <|-- Worker
+User <|-- Admin
+User <|-- Reviewer
+
+Worker --> Notification
+Admin --> Notification
+Reviewer --> Notification
+
+Notification -- Project
+
+class CompanyGroup {
+    - String name
+}
+
+class Company {
+    - String name
+    - String cif
+    - String invoicing_address
+}
+
+class Project {
+    - String name
+    - Float contracted_hours
+    - Float available_hours
+}
+
+class Hosting {
+    - String type
+    - String title
+}
+
+class Invoice {
+    - String name
+    - Entry entries
+    - Float discount_hours
+    - Float sub_total
+    - Float vat
+    - Float irpf
+    - Float total_hours
+    - Float total_price
+    - Bool is_rect
+}
+
+class Task {
+    - String name
+    - Float hour_price
+
+}
+
+class Entry {
+    - Date date
+    - String description
+    - Float hours
+    - Integer user_id
+    - String tag
+}
+
+class Worker {}
+
+class Reviewer {}
+
+class Admin {}
+
+class User {
+    - String full_name 
+    - String email
+    - String password
+}
+
+class Notification {
+    - String Content
+}
+
+@enduml
